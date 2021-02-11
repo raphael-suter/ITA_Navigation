@@ -1,24 +1,34 @@
 import registerRootComponent from "expo/build/launch/registerRootComponent";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import HomeScreen from "./Screens/HomeScreen";
+import DetailsScreen from "./Screens/DetailsScreen";
+import { Ionicons } from "@expo/vector-icons";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const Drawer = createDrawerNavigator();
+const createHomeIcon = ({ size }) => <Ionicons name="home" size={size} />;
 
-const App = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-};
+const createDetailsIcon = ({ size }) => (
+  <Ionicons name="information" size={size} />
+);
+
+const App = () => (
+  <NavigationContainer>
+    <Drawer.Navigator>
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarIcon: createHomeIcon }}
+      />
+      <Drawer.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{ tabBarIcon: createDetailsIcon }}
+        initialParams={{ count: 1 }}
+      />
+    </Drawer.Navigator>
+  </NavigationContainer>
+);
 
 registerRootComponent(App);
